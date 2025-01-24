@@ -9,7 +9,7 @@ const int screenWidth = 960;
 const int screenHeight = 960;
 const int mazeWidth = 800;
 const int mazeHeight = 800;
-const int n = 20;
+const int n = 50;
 
 void mazeOnRedraw(Graph* graph, Stack* stack) {
   const int offsetX = (screenWidth - mazeWidth) / 2;
@@ -24,6 +24,7 @@ void mazeOnRedraw(Graph* graph, Stack* stack) {
   for (int i = 0; i < nodeCount; ++i) {
     int x = i % n;
     int y = i / n;
+    DrawRectangle(offsetX + x * cellWidth, offsetY + y * cellHeight, cellWidth, cellHeight, GraphNode(graph, i) ? RAYWHITE : BLUE);
     if (x != 0 && graph->edges[i - 1 + i * nodeCount]) {
       DrawLineEx((Vector2) {offsetX + x * cellWidth, offsetY + y * cellHeight}, (Vector2) {offsetX + x * cellWidth, offsetY + y * cellHeight + cellHeight}, 5, BLACK);
     }
