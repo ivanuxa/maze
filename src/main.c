@@ -9,33 +9,33 @@ const int screenWidth = 960;
 const int screenHeight = 960;
 const int mazeWidth = 800;
 const int mazeHeight = 800;
-const int n = 50;
+const int n = 100;
 
 void mazeOnRedraw(Graph* graph, Stack* stack) {
   const int offsetX = (screenWidth - mazeWidth) / 2;
   const int offsetY = (screenHeight - mazeHeight) / 2;
   const int cellWidth = mazeWidth / n;
   const int cellHeight = mazeHeight / n;
-  DrawLineEx((Vector2) {offsetX, offsetY}, (Vector2) {offsetX, offsetY + mazeHeight}, 5, BLACK);
-  DrawLineEx((Vector2) {offsetX, offsetY}, (Vector2) {offsetX + mazeWidth, offsetY}, 5, BLACK);
-  DrawLineEx((Vector2) {offsetX + mazeWidth, offsetY}, (Vector2) {offsetX + mazeWidth, offsetY + mazeHeight}, 5, BLACK);
-  DrawLineEx((Vector2) {offsetX, offsetY + mazeHeight}, (Vector2) {offsetX + mazeWidth, offsetY + mazeHeight}, 5, BLACK);
+  DrawLine(offsetX, offsetY, offsetX, offsetY + mazeHeight, BLACK);
+  DrawLine(offsetX, offsetY, offsetX + mazeWidth, offsetY, BLACK);
+  DrawLine(offsetX + mazeWidth + 1, offsetY, offsetX + mazeWidth + 1, offsetY + mazeHeight + 1, BLACK);
+  DrawLine(offsetX, offsetY + mazeHeight + 1, offsetX + mazeWidth + 1, offsetY + mazeHeight + 1, BLACK);
   int nodeCount = graph->nodeCount;
   for (int i = 0; i < nodeCount; ++i) {
     int x = i % n;
     int y = i / n;
     DrawRectangle(offsetX + x * cellWidth, offsetY + y * cellHeight, cellWidth, cellHeight, GraphNode(graph, i) ? RAYWHITE : BLUE);
     if (x != 0 && graph->edges[i - 1 + i * nodeCount]) {
-      DrawLineEx((Vector2) {offsetX + x * cellWidth, offsetY + y * cellHeight}, (Vector2) {offsetX + x * cellWidth, offsetY + y * cellHeight + cellHeight}, 5, BLACK);
+      DrawLine(offsetX + x * cellWidth, offsetY + y * cellHeight, offsetX + x * cellWidth, offsetY + y * cellHeight + cellHeight, BLACK);
     }
     if (x != n - 1 && graph->edges[i + 1 + i * nodeCount]) {
-      DrawLineEx((Vector2) {offsetX + x * cellWidth + cellWidth, offsetY + y * cellHeight}, (Vector2) {offsetX + x * cellWidth + cellWidth, offsetY + y * cellHeight + cellHeight}, 5, BLACK);
+      DrawLine(offsetX + x * cellWidth + cellWidth, offsetY + y * cellHeight, offsetX + x * cellWidth + cellWidth, offsetY + y * cellHeight + cellHeight, BLACK);
     }
     if (y != 0 && graph->edges[i - n + i * nodeCount]) {
-      DrawLineEx((Vector2) {offsetX + x * cellWidth, offsetY + y * cellHeight}, (Vector2) {offsetX + x * cellWidth + cellWidth, offsetY + y * cellHeight}, 5, BLACK);
+      DrawLine(offsetX + x * cellWidth, offsetY + y * cellHeight, offsetX + x * cellWidth + cellWidth, offsetY + y * cellHeight, BLACK);
     }
     if (y != n - 1 && graph->edges[i + n + i * nodeCount]) {
-      DrawLineEx((Vector2) {offsetX + x * cellWidth, offsetY + y * cellHeight + cellHeight}, (Vector2) {offsetX + x * cellWidth + cellWidth, offsetY + y * cellHeight + cellHeight}, 5, BLACK);
+      DrawLine(offsetX + x * cellWidth, offsetY + y * cellHeight + cellHeight, offsetX + x * cellWidth + cellWidth, offsetY + y * cellHeight + cellHeight, BLACK);
     }
   }
   if (stack->size > 0) {
@@ -77,7 +77,7 @@ void reevalGraph(Graph* graph, Stack* stack) {
 
 int main() {
   InitWindow(screenWidth, screenHeight, "raylib basic window");
-  SetTargetFPS(60);
+  SetTargetFPS(90);
   
   srand(time(NULL));
 
