@@ -15,4 +15,3 @@ int GraphVisitNode(Graph* graph, int node);
 int GraphConnectedTo(Graph* graph, int node, int* nodes);
 void GraphDestroy(Graph* graph);
 void GraphPrint(Graph* graph);
-void GraphPrintD(Graph* graph);
