@@ -23,9 +23,6 @@ int GraphAdd(Graph* graph, int node1, int node2) {
     int nodeCount = graph->nodeCount;
     int i1 = node1 + nodeCount * node2;
     int i2 = node2 + nodeCount * node1;
-    if (graph->edges[i1] != 0) {
-        return 0;
-    }
     graph->edges[i1] = 1;
     graph->edges[i2] = 1;
     return 1;
@@ -40,6 +37,7 @@ int GraphRemove(Graph* graph, int node1, int node2) {
 }
 inline void GraphDestroy(Graph* graph) {
     free(graph->edges);
+    free(graph->nodes);
 }
 int GraphNode(Graph* graph, int node) {
     assert(node < graph->nodeCount);
@@ -47,9 +45,6 @@ int GraphNode(Graph* graph, int node) {
 }
 int GraphVisitNode(Graph* graph, int node) {
     assert(node < graph->nodeCount);
-    if (GraphNode(graph, node)) {
-        return 0;
-    }
     graph->nodes[node] = 1;
     return 1;
 }
@@ -70,4 +65,5 @@ void GraphPrint(Graph* graph) {
         }
         printf("\n");
     }
+    printf("\n");
 }
